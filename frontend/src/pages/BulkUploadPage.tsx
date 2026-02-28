@@ -28,6 +28,26 @@ interface ParsedRow {
   spouseName: string;
   alternateMobile: string;
   familyMemberCount: string;
+  priorTo2021: boolean;
+  year2022: boolean;
+  year2023: boolean;
+  year2024: boolean;
+  year2025: boolean;
+  year2026: boolean;
+  year2027: boolean;
+  year2028: boolean;
+  year2029: boolean;
+  year2030: boolean;
+  receiptPriorTo2021: string;
+  receipt2022: string;
+  receipt2023: string;
+  receipt2024: string;
+  receipt2025: string;
+  receipt2026: string;
+  receipt2027: string;
+  receipt2028: string;
+  receipt2029: string;
+  receipt2030: string;
   errors: string[];
   isValid: boolean;
 }
@@ -36,7 +56,33 @@ interface ParsedRow {
 
 const REQUIRED_COLUMNS = ['Membership Number', 'Name', 'Mobile No', 'Address', 'Area', 'Spouse Name'] as const;
 const OPTIONAL_COLUMNS = ['Alternate Mobile', 'Family Member Count'] as const;
-const ALL_COLUMNS = [...REQUIRED_COLUMNS, ...OPTIONAL_COLUMNS];
+const YEAR_COLUMNS = ['Prior to 2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'] as const;
+const RECEIPT_COLUMNS = [
+  'Receipt Prior to 2021',
+  'Receipt 2022',
+  'Receipt 2023',
+  'Receipt 2024',
+  'Receipt 2025',
+  'Receipt 2026',
+  'Receipt 2027',
+  'Receipt 2028',
+  'Receipt 2029',
+  'Receipt 2030',
+] as const;
+
+// Interleave year and receipt columns for the template header
+const YEAR_RECEIPT_COLUMNS: string[] = [];
+YEAR_COLUMNS.forEach((y, i) => {
+  YEAR_RECEIPT_COLUMNS.push(y);
+  YEAR_RECEIPT_COLUMNS.push(RECEIPT_COLUMNS[i]);
+});
+
+const ALL_COLUMNS = [...REQUIRED_COLUMNS, ...OPTIONAL_COLUMNS, ...YEAR_RECEIPT_COLUMNS];
+
+function parseBooleanCol(value: string): boolean {
+  const v = value.trim().toLowerCase();
+  return v === 'true' || v === '1' || v === 'yes';
+}
 
 function parseCSVLine(line: string): string[] {
   const result: string[] = [];
@@ -96,6 +142,30 @@ function parseCSV(text: string): ParsedRow[] {
     const alternateMobile = getCol(cells, 'Alternate Mobile');
     const familyMemberCount = getCol(cells, 'Family Member Count');
 
+    // Year columns
+    const priorTo2021 = parseBooleanCol(getCol(cells, 'Prior to 2021'));
+    const year2022 = parseBooleanCol(getCol(cells, '2022'));
+    const year2023 = parseBooleanCol(getCol(cells, '2023'));
+    const year2024 = parseBooleanCol(getCol(cells, '2024'));
+    const year2025 = parseBooleanCol(getCol(cells, '2025'));
+    const year2026 = parseBooleanCol(getCol(cells, '2026'));
+    const year2027 = parseBooleanCol(getCol(cells, '2027'));
+    const year2028 = parseBooleanCol(getCol(cells, '2028'));
+    const year2029 = parseBooleanCol(getCol(cells, '2029'));
+    const year2030 = parseBooleanCol(getCol(cells, '2030'));
+
+    // Receipt columns
+    const receiptPriorTo2021 = getCol(cells, 'Receipt Prior to 2021');
+    const receipt2022 = getCol(cells, 'Receipt 2022');
+    const receipt2023 = getCol(cells, 'Receipt 2023');
+    const receipt2024 = getCol(cells, 'Receipt 2024');
+    const receipt2025 = getCol(cells, 'Receipt 2025');
+    const receipt2026 = getCol(cells, 'Receipt 2026');
+    const receipt2027 = getCol(cells, 'Receipt 2027');
+    const receipt2028 = getCol(cells, 'Receipt 2028');
+    const receipt2029 = getCol(cells, 'Receipt 2029');
+    const receipt2030 = getCol(cells, 'Receipt 2030');
+
     if (!membershipNumber) errors.push('Membership Number is required');
     if (!name) errors.push('Name is required');
     if (!mobileNo) errors.push('Mobile No is required');
@@ -119,6 +189,26 @@ function parseCSV(text: string): ParsedRow[] {
       spouseName,
       alternateMobile,
       familyMemberCount,
+      priorTo2021,
+      year2022,
+      year2023,
+      year2024,
+      year2025,
+      year2026,
+      year2027,
+      year2028,
+      year2029,
+      year2030,
+      receiptPriorTo2021,
+      receipt2022,
+      receipt2023,
+      receipt2024,
+      receipt2025,
+      receipt2026,
+      receipt2027,
+      receipt2028,
+      receipt2029,
+      receipt2030,
       errors,
       isValid: errors.length === 0,
     });
@@ -130,8 +220,8 @@ function parseCSV(text: string): ParsedRow[] {
 function downloadSampleCSV() {
   const header = ALL_COLUMNS.join(',');
   const sample = [
-    'MEM001,John Doe,9876543210,"123 Main St, City",Downtown,Jane Doe,9876543211,4',
-    'MEM002,Alice Smith,8765432109,"456 Oak Ave, Town",Uptown,Bob Smith,,2',
+    'MEM001,John Doe,9876543210,"123 Main St, City",Downtown,Jane Doe,9876543211,4,Yes,REC-001,No,,No,,Yes,REC-004,Yes,REC-005,No,,No,,No,,No,,No,',
+    'MEM002,Alice Smith,8765432109,"456 Oak Ave, Town",Uptown,Bob Smith,,2,No,,No,,No,,No,,Yes,REC-005,Yes,REC-006,No,,No,,No,,No,',
   ].join('\n');
   const content = `${header}\n${sample}`;
   const blob = new Blob([content], { type: 'text/csv' });
@@ -217,6 +307,26 @@ export default function BulkUploadPage() {
         spouseName: row.spouseName,
         alternateMobile: row.alternateMobile || undefined,
         familyMemberCount,
+        priorTo2021: row.priorTo2021 || undefined,
+        year2022: row.year2022 || undefined,
+        year2023: row.year2023 || undefined,
+        year2024: row.year2024 || undefined,
+        year2025: row.year2025 || undefined,
+        year2026: row.year2026 || undefined,
+        year2027: row.year2027 || undefined,
+        year2028: row.year2028 || undefined,
+        year2029: row.year2029 || undefined,
+        year2030: row.year2030 || undefined,
+        receiptPriorTo2021: row.receiptPriorTo2021 || undefined,
+        receipt2022: row.receipt2022 || undefined,
+        receipt2023: row.receipt2023 || undefined,
+        receipt2024: row.receipt2024 || undefined,
+        receipt2025: row.receipt2025 || undefined,
+        receipt2026: row.receipt2026 || undefined,
+        receipt2027: row.receipt2027 || undefined,
+        receipt2028: row.receipt2028 || undefined,
+        receipt2029: row.receipt2029 || undefined,
+        receipt2030: row.receipt2030 || undefined,
       };
     });
 
@@ -373,6 +483,32 @@ export default function BulkUploadPage() {
                     ))}
                   </div>
                 </div>
+                <div>
+                  <p className="text-xs font-medium text-foreground mb-1">Membership year columns:</p>
+                  <div className="flex flex-wrap gap-1">
+                    {YEAR_COLUMNS.map((col) => (
+                      <Badge key={col} variant="secondary" className="text-xs px-1.5 py-0">
+                        {col}
+                      </Badge>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Use <span className="font-mono">Yes</span>, <span className="font-mono">1</span>, or <span className="font-mono">true</span> to mark a year active.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-foreground mb-1">Receipt number columns:</p>
+                  <div className="flex flex-wrap gap-1">
+                    {RECEIPT_COLUMNS.map((col) => (
+                      <Badge key={col} variant="outline" className="text-xs px-1.5 py-0 border-primary/30 text-primary">
+                        {col}
+                      </Badge>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Optional text value for the receipt number of each year.
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -381,119 +517,135 @@ export default function BulkUploadPage() {
           {hasParsed && (
             <Card>
               <CardContent className="pt-4 space-y-2">
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between items-center text-sm">
                   <span className="text-muted-foreground">Total rows</span>
-                  <span className="font-medium">{rows.length}</span>
+                  <span className="font-semibold">{rows.length}</span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between items-center text-sm">
                   <span className="text-green-600 dark:text-green-400">Valid</span>
-                  <span className="font-medium text-green-600 dark:text-green-400">{validRows.length}</span>
+                  <span className="font-semibold text-green-600 dark:text-green-400">{validRows.length}</span>
                 </div>
                 {invalidRows.length > 0 && (
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between items-center text-sm">
                     <span className="text-destructive">Invalid</span>
-                    <span className="font-medium text-destructive">{invalidRows.length}</span>
+                    <span className="font-semibold text-destructive">{invalidRows.length}</span>
                   </div>
                 )}
-                <Button
-                  className="w-full mt-2"
-                  size="sm"
-                  disabled={validRows.length === 0 || bulkAddMembers.isPending}
-                  onClick={handleSubmit}
-                >
-                  {bulkAddMembers.isPending ? (
-                    <>
-                      <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
-                      Importing...
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="w-3.5 h-3.5 mr-1.5" />
-                      Import {validRows.length} Member{validRows.length !== 1 ? 's' : ''}
-                    </>
-                  )}
-                </Button>
               </CardContent>
             </Card>
+          )}
+
+          {/* Import Button */}
+          {hasParsed && validRows.length > 0 && (
+            <Button
+              className="w-full"
+              onClick={handleSubmit}
+              disabled={bulkAddMembers.isPending}
+            >
+              {bulkAddMembers.isPending ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Importing...
+                </>
+              ) : (
+                <>
+                  <Upload className="w-4 h-4 mr-2" />
+                  Import {validRows.length} Member{validRows.length !== 1 ? 's' : ''}
+                </>
+              )}
+            </Button>
           )}
         </div>
 
         {/* Right Panel - Preview Table */}
         <div className="lg:col-span-2">
           {!hasParsed ? (
-            <Card className="h-full flex items-center justify-center min-h-[300px]">
+            <Card className="h-full flex items-center justify-center min-h-64">
               <CardContent className="text-center py-12">
                 <FileText className="w-12 h-12 mx-auto mb-3 text-muted-foreground/40" />
-                <p className="text-muted-foreground font-medium">No file uploaded yet</p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Upload a CSV file to preview the data before importing
+                <p className="text-muted-foreground text-sm">Upload a CSV file to preview its contents</p>
+                <p className="text-muted-foreground/60 text-xs mt-1">
+                  Download the template to see the expected format
                 </p>
               </CardContent>
             </Card>
           ) : (
             <Card>
               <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-base font-semibold">Preview</CardTitle>
-                  {invalidRows.length > 0 && (
-                    <div className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400">
-                      <AlertTriangle className="w-3.5 h-3.5" />
-                      {invalidRows.length} row{invalidRows.length !== 1 ? 's' : ''} with errors
-                    </div>
-                  )}
-                </div>
+                <CardTitle className="text-base font-semibold">Preview</CardTitle>
+                <CardDescription className="text-xs">
+                  {rows.length} row{rows.length !== 1 ? 's' : ''} parsed from {fileName}
+                </CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                 <ScrollArea className="h-[500px]">
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="w-10 text-xs">#</TableHead>
+                        <TableHead className="text-xs w-8">#</TableHead>
                         <TableHead className="text-xs">Status</TableHead>
-                        <TableHead className="text-xs">Membership No</TableHead>
+                        <TableHead className="text-xs">Membership No.</TableHead>
                         <TableHead className="text-xs">Name</TableHead>
                         <TableHead className="text-xs">Mobile</TableHead>
                         <TableHead className="text-xs">Area</TableHead>
-                        <TableHead className="text-xs">Spouse</TableHead>
+                        <TableHead className="text-xs">Years</TableHead>
                         <TableHead className="text-xs">Errors</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {rows.map((row) => (
-                        <TableRow
-                          key={row.rowIndex}
-                          className={row.isValid ? '' : 'bg-destructive/5'}
-                        >
-                          <TableCell className="text-xs text-muted-foreground">{row.rowIndex}</TableCell>
-                          <TableCell>
-                            {row.isValid ? (
-                              <CheckCircle2 className="w-4 h-4 text-green-500" />
-                            ) : (
-                              <XCircle className="w-4 h-4 text-destructive" />
-                            )}
-                          </TableCell>
-                          <TableCell className="text-xs font-mono">
-                            {row.membershipNumber || (
-                              <span className="text-destructive italic">missing</span>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-xs">{row.name || <span className="text-muted-foreground italic">—</span>}</TableCell>
-                          <TableCell className="text-xs">{row.mobileNo || <span className="text-muted-foreground italic">—</span>}</TableCell>
-                          <TableCell className="text-xs">{row.area || <span className="text-muted-foreground italic">—</span>}</TableCell>
-                          <TableCell className="text-xs">{row.spouseName || <span className="text-muted-foreground italic">—</span>}</TableCell>
-                          <TableCell className="text-xs">
-                            {row.errors.length > 0 ? (
-                              <ul className="space-y-0.5">
-                                {row.errors.map((err, idx) => (
-                                  <li key={idx} className="text-destructive">{err}</li>
-                                ))}
-                              </ul>
-                            ) : (
-                              <span className="text-green-600 dark:text-green-400">OK</span>
-                            )}
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                      {rows.map((row) => {
+                        const activeYears = [
+                          row.priorTo2021 && 'Prior to 2021',
+                          row.year2022 && '2022',
+                          row.year2023 && '2023',
+                          row.year2024 && '2024',
+                          row.year2025 && '2025',
+                          row.year2026 && '2026',
+                          row.year2027 && '2027',
+                          row.year2028 && '2028',
+                          row.year2029 && '2029',
+                          row.year2030 && '2030',
+                        ].filter(Boolean) as string[];
+
+                        return (
+                          <TableRow key={row.rowIndex} className={!row.isValid ? 'bg-destructive/5' : ''}>
+                            <TableCell className="text-xs text-muted-foreground">{row.rowIndex}</TableCell>
+                            <TableCell>
+                              {row.isValid ? (
+                                <CheckCircle2 className="w-4 h-4 text-green-500" />
+                              ) : (
+                                <XCircle className="w-4 h-4 text-destructive" />
+                              )}
+                            </TableCell>
+                            <TableCell className="text-xs font-medium">{row.membershipNumber || '—'}</TableCell>
+                            <TableCell className="text-xs">{row.name || '—'}</TableCell>
+                            <TableCell className="text-xs">{row.mobileNo || '—'}</TableCell>
+                            <TableCell className="text-xs">{row.area || '—'}</TableCell>
+                            <TableCell className="text-xs">
+                              <div className="flex flex-wrap gap-0.5">
+                                {activeYears.length > 0
+                                  ? activeYears.map((y) => (
+                                      <Badge key={y} variant="secondary" className="text-xs px-1 py-0">
+                                        {y}
+                                      </Badge>
+                                    ))
+                                  : <span className="text-muted-foreground">—</span>
+                                }
+                              </div>
+                            </TableCell>
+                            <TableCell className="text-xs">
+                              {row.errors.length > 0 ? (
+                                <div className="flex items-start gap-1">
+                                  <AlertTriangle className="w-3.5 h-3.5 text-destructive shrink-0 mt-0.5" />
+                                  <span className="text-destructive text-xs">{row.errors.join('; ')}</span>
+                                </div>
+                              ) : (
+                                <span className="text-muted-foreground">—</span>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 </ScrollArea>

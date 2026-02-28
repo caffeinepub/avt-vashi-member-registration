@@ -3,8 +3,26 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import MemberCard from './MemberCard';
 import { useGetAllMembers } from '@/hooks/useQueries';
+import type { Member } from '@/backend';
 
-export default function MemberList() {
+interface MemberListProps {
+  searchQuery?: string;
+}
+
+function matchesSearch(member: Member, query: string): boolean {
+  const q = query.toLowerCase().trim();
+  if (!q) return true;
+  return (
+    member.membershipNumber.toLowerCase().includes(q) ||
+    member.name.toLowerCase().includes(q) ||
+    member.mobileNo.toLowerCase().includes(q) ||
+    member.area.toLowerCase().includes(q) ||
+    member.spouseName.toLowerCase().includes(q) ||
+    member.address.toLowerCase().includes(q)
+  );
+}
+
+export default function MemberList({ searchQuery = '' }: MemberListProps) {
   const { data: members, isLoading, isError, refetch, isFetching } = useGetAllMembers();
 
   if (isLoading) {
@@ -58,11 +76,32 @@ export default function MemberList() {
     );
   }
 
+  const filteredMembers = members.filter((m) => matchesSearch(m, searchQuery));
+
+  if (filteredMembers.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+          <Users className="w-7 h-7 text-primary" />
+        </div>
+        <h3 className="font-semibold text-foreground text-lg mb-1">No members match your search</h3>
+        <p className="text-sm text-muted-foreground max-w-xs">
+          Try a different keyword or clear the search to see all members.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          Showing <span className="font-semibold text-foreground">{members.length}</span> member{members.length !== 1 ? 's' : ''}
+          Showing{' '}
+          <span className="font-semibold text-foreground">{filteredMembers.length}</span>
+          {searchQuery.trim() && filteredMembers.length !== members.length && (
+            <span> of <span className="font-semibold text-foreground">{members.length}</span></span>
+          )}{' '}
+          member{filteredMembers.length !== 1 ? 's' : ''}
         </p>
         {isFetching && (
           <span className="text-xs text-muted-foreground animate-pulse">Refreshing…</span>
@@ -70,7 +109,7 @@ export default function MemberList() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {members.map((member) => (
+        {filteredMembers.map((member) => (
           <MemberCard key={member.id} member={member} />
         ))}
       </div>

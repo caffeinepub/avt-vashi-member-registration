@@ -93,23 +93,63 @@ export type MemberID = string;
 export interface Member {
     id: MemberID;
     membershipNumber: string;
+    receipt2022?: string;
+    receipt2023?: string;
+    receipt2024?: string;
+    receipt2025?: string;
+    receipt2026?: string;
+    receipt2027?: string;
+    receipt2028?: string;
+    receipt2029?: string;
+    receipt2030?: string;
+    receiptPriorTo2021?: string;
     area: string;
     name: string;
     mobileNo: string;
     alternateMobile?: string;
+    priorTo2021?: boolean;
     address: string;
     familyMemberCount?: bigint;
     spouseName: string;
+    year2022?: boolean;
+    year2023?: boolean;
+    year2024?: boolean;
+    year2025?: boolean;
+    year2026?: boolean;
+    year2027?: boolean;
+    year2028?: boolean;
+    year2029?: boolean;
+    year2030?: boolean;
 }
 export interface BulkMemberInput {
     membershipNumber: string;
+    receipt2022?: string;
+    receipt2023?: string;
+    receipt2024?: string;
+    receipt2025?: string;
+    receipt2026?: string;
+    receipt2027?: string;
+    receipt2028?: string;
+    receipt2029?: string;
+    receipt2030?: string;
+    receiptPriorTo2021?: string;
     area: string;
     name: string;
     mobileNo: string;
     alternateMobile?: string;
+    priorTo2021?: boolean;
     address: string;
     familyMemberCount?: bigint;
     spouseName: string;
+    year2022?: boolean;
+    year2023?: boolean;
+    year2024?: boolean;
+    year2025?: boolean;
+    year2026?: boolean;
+    year2027?: boolean;
+    year2028?: boolean;
+    year2029?: boolean;
+    year2030?: boolean;
 }
 export interface UserProfile {
     name: string;
@@ -121,7 +161,7 @@ export enum UserRole {
 }
 export interface backendInterface {
     _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
-    addMember(name: string, mobileNo: string, address: string, area: string, spouseName: string, alternateMobile: string | null, familyMemberCount: bigint | null, membershipNumber: string): Promise<MemberID>;
+    addMember(name: string, mobileNo: string, address: string, area: string, spouseName: string, alternateMobile: string | null, familyMemberCount: bigint | null, membershipNumber: string, priorTo2021: boolean | null, year2022: boolean | null, year2023: boolean | null, year2024: boolean | null, year2025: boolean | null, year2026: boolean | null, year2027: boolean | null, year2028: boolean | null, year2029: boolean | null, year2030: boolean | null, receiptPriorTo2021: string | null, receipt2022: string | null, receipt2023: string | null, receipt2024: string | null, receipt2025: string | null, receipt2026: string | null, receipt2027: string | null, receipt2028: string | null, receipt2029: string | null, receipt2030: string | null): Promise<MemberID>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     bulkAddMembers(membersInput: Array<BulkMemberInput>): Promise<bigint>;
     getAllMembers(): Promise<Array<Member>>;
@@ -149,45 +189,45 @@ export class Backend implements backendInterface {
             return result;
         }
     }
-    async addMember(arg0: string, arg1: string, arg2: string, arg3: string, arg4: string, arg5: string | null, arg6: bigint | null, arg7: string): Promise<MemberID> {
+    async addMember(arg0: string, arg1: string, arg2: string, arg3: string, arg4: string, arg5: string | null, arg6: bigint | null, arg7: string, arg8: boolean | null, arg9: boolean | null, arg10: boolean | null, arg11: boolean | null, arg12: boolean | null, arg13: boolean | null, arg14: boolean | null, arg15: boolean | null, arg16: boolean | null, arg17: boolean | null, arg18: string | null, arg19: string | null, arg20: string | null, arg21: string | null, arg22: string | null, arg23: string | null, arg24: string | null, arg25: string | null, arg26: string | null, arg27: string | null): Promise<MemberID> {
         if (this.processError) {
             try {
-                const result = await this.actor.addMember(arg0, arg1, arg2, arg3, arg4, to_candid_opt_n1(this._uploadFile, this._downloadFile, arg5), to_candid_opt_n2(this._uploadFile, this._downloadFile, arg6), arg7);
+                const result = await this.actor.addMember(arg0, arg1, arg2, arg3, arg4, to_candid_opt_n1(this._uploadFile, this._downloadFile, arg5), to_candid_opt_n2(this._uploadFile, this._downloadFile, arg6), arg7, to_candid_opt_n3(this._uploadFile, this._downloadFile, arg8), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg9), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg10), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg11), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg12), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg13), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg14), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg15), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg16), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg17), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg18), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg19), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg20), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg21), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg22), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg23), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg24), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg25), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg26), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg27));
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.addMember(arg0, arg1, arg2, arg3, arg4, to_candid_opt_n1(this._uploadFile, this._downloadFile, arg5), to_candid_opt_n2(this._uploadFile, this._downloadFile, arg6), arg7);
+            const result = await this.actor.addMember(arg0, arg1, arg2, arg3, arg4, to_candid_opt_n1(this._uploadFile, this._downloadFile, arg5), to_candid_opt_n2(this._uploadFile, this._downloadFile, arg6), arg7, to_candid_opt_n3(this._uploadFile, this._downloadFile, arg8), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg9), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg10), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg11), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg12), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg13), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg14), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg15), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg16), to_candid_opt_n3(this._uploadFile, this._downloadFile, arg17), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg18), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg19), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg20), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg21), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg22), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg23), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg24), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg25), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg26), to_candid_opt_n1(this._uploadFile, this._downloadFile, arg27));
             return result;
         }
     }
     async assignCallerUserRole(arg0: Principal, arg1: UserRole): Promise<void> {
         if (this.processError) {
             try {
-                const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n3(this._uploadFile, this._downloadFile, arg1));
+                const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n4(this._uploadFile, this._downloadFile, arg1));
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n3(this._uploadFile, this._downloadFile, arg1));
+            const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n4(this._uploadFile, this._downloadFile, arg1));
             return result;
         }
     }
     async bulkAddMembers(arg0: Array<BulkMemberInput>): Promise<bigint> {
         if (this.processError) {
             try {
-                const result = await this.actor.bulkAddMembers(to_candid_vec_n5(this._uploadFile, this._downloadFile, arg0));
+                const result = await this.actor.bulkAddMembers(to_candid_vec_n6(this._uploadFile, this._downloadFile, arg0));
                 return result;
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.bulkAddMembers(to_candid_vec_n5(this._uploadFile, this._downloadFile, arg0));
+            const result = await this.actor.bulkAddMembers(to_candid_vec_n6(this._uploadFile, this._downloadFile, arg0));
             return result;
         }
     }
@@ -195,70 +235,70 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getAllMembers();
-                return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
+                return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getAllMembers();
-            return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
+            return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
         }
     }
     async getCallerUserProfile(): Promise<UserProfile | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.getCallerUserProfile();
-                return from_candid_opt_n13(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n15(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getCallerUserProfile();
-            return from_candid_opt_n13(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n15(this._uploadFile, this._downloadFile, result);
         }
     }
     async getCallerUserRole(): Promise<UserRole> {
         if (this.processError) {
             try {
                 const result = await this.actor.getCallerUserRole();
-                return from_candid_UserRole_n14(this._uploadFile, this._downloadFile, result);
+                return from_candid_UserRole_n16(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getCallerUserRole();
-            return from_candid_UserRole_n14(this._uploadFile, this._downloadFile, result);
+            return from_candid_UserRole_n16(this._uploadFile, this._downloadFile, result);
         }
     }
     async getMember(arg0: MemberID): Promise<Member> {
         if (this.processError) {
             try {
                 const result = await this.actor.getMember(arg0);
-                return from_candid_Member_n9(this._uploadFile, this._downloadFile, result);
+                return from_candid_Member_n10(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getMember(arg0);
-            return from_candid_Member_n9(this._uploadFile, this._downloadFile, result);
+            return from_candid_Member_n10(this._uploadFile, this._downloadFile, result);
         }
     }
     async getUserProfile(arg0: Principal): Promise<UserProfile | null> {
         if (this.processError) {
             try {
                 const result = await this.actor.getUserProfile(arg0);
-                return from_candid_opt_n13(this._uploadFile, this._downloadFile, result);
+                return from_candid_opt_n15(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getUserProfile(arg0);
-            return from_candid_opt_n13(this._uploadFile, this._downloadFile, result);
+            return from_candid_opt_n15(this._uploadFile, this._downloadFile, result);
         }
     }
     async isCallerAdmin(): Promise<boolean> {
@@ -290,55 +330,118 @@ export class Backend implements backendInterface {
         }
     }
 }
-function from_candid_Member_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Member): Member {
-    return from_candid_record_n10(_uploadFile, _downloadFile, value);
+function from_candid_Member_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Member): Member {
+    return from_candid_record_n11(_uploadFile, _downloadFile, value);
 }
-function from_candid_UserRole_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
-    return from_candid_variant_n15(_uploadFile, _downloadFile, value);
+function from_candid_UserRole_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
+    return from_candid_variant_n17(_uploadFile, _downloadFile, value);
 }
-function from_candid_opt_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [string]): string | null {
+function from_candid_opt_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [string]): string | null {
     return value.length === 0 ? null : value[0];
 }
-function from_candid_opt_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
+function from_candid_opt_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [boolean]): boolean | null {
     return value.length === 0 ? null : value[0];
 }
-function from_candid_opt_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+function from_candid_opt_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
     return value.length === 0 ? null : value[0];
 }
-function from_candid_record_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_opt_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_record_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     id: _MemberID;
     membershipNumber: string;
+    receipt2022: [] | [string];
+    receipt2023: [] | [string];
+    receipt2024: [] | [string];
+    receipt2025: [] | [string];
+    receipt2026: [] | [string];
+    receipt2027: [] | [string];
+    receipt2028: [] | [string];
+    receipt2029: [] | [string];
+    receipt2030: [] | [string];
+    receiptPriorTo2021: [] | [string];
     area: string;
     name: string;
     mobileNo: string;
     alternateMobile: [] | [string];
+    priorTo2021: [] | [boolean];
     address: string;
     familyMemberCount: [] | [bigint];
     spouseName: string;
+    year2022: [] | [boolean];
+    year2023: [] | [boolean];
+    year2024: [] | [boolean];
+    year2025: [] | [boolean];
+    year2026: [] | [boolean];
+    year2027: [] | [boolean];
+    year2028: [] | [boolean];
+    year2029: [] | [boolean];
+    year2030: [] | [boolean];
 }): {
     id: MemberID;
     membershipNumber: string;
+    receipt2022?: string;
+    receipt2023?: string;
+    receipt2024?: string;
+    receipt2025?: string;
+    receipt2026?: string;
+    receipt2027?: string;
+    receipt2028?: string;
+    receipt2029?: string;
+    receipt2030?: string;
+    receiptPriorTo2021?: string;
     area: string;
     name: string;
     mobileNo: string;
     alternateMobile?: string;
+    priorTo2021?: boolean;
     address: string;
     familyMemberCount?: bigint;
     spouseName: string;
+    year2022?: boolean;
+    year2023?: boolean;
+    year2024?: boolean;
+    year2025?: boolean;
+    year2026?: boolean;
+    year2027?: boolean;
+    year2028?: boolean;
+    year2029?: boolean;
+    year2030?: boolean;
 } {
     return {
         id: value.id,
         membershipNumber: value.membershipNumber,
+        receipt2022: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receipt2022)),
+        receipt2023: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receipt2023)),
+        receipt2024: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receipt2024)),
+        receipt2025: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receipt2025)),
+        receipt2026: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receipt2026)),
+        receipt2027: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receipt2027)),
+        receipt2028: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receipt2028)),
+        receipt2029: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receipt2029)),
+        receipt2030: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receipt2030)),
+        receiptPriorTo2021: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.receiptPriorTo2021)),
         area: value.area,
         name: value.name,
         mobileNo: value.mobileNo,
-        alternateMobile: record_opt_to_undefined(from_candid_opt_n11(_uploadFile, _downloadFile, value.alternateMobile)),
+        alternateMobile: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.alternateMobile)),
+        priorTo2021: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.priorTo2021)),
         address: value.address,
-        familyMemberCount: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.familyMemberCount)),
-        spouseName: value.spouseName
+        familyMemberCount: record_opt_to_undefined(from_candid_opt_n14(_uploadFile, _downloadFile, value.familyMemberCount)),
+        spouseName: value.spouseName,
+        year2022: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.year2022)),
+        year2023: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.year2023)),
+        year2024: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.year2024)),
+        year2025: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.year2025)),
+        year2026: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.year2026)),
+        year2027: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.year2027)),
+        year2028: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.year2028)),
+        year2029: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.year2029)),
+        year2030: record_opt_to_undefined(from_candid_opt_n13(_uploadFile, _downloadFile, value.year2030))
     };
 }
-function from_candid_variant_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_variant_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     admin: null;
 } | {
     user: null;
@@ -347,14 +450,14 @@ function from_candid_variant_n15(_uploadFile: (file: ExternalBlob) => Promise<Ui
 }): UserRole {
     return "admin" in value ? UserRole.admin : "user" in value ? UserRole.user : "guest" in value ? UserRole.guest : value;
 }
-function from_candid_vec_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Member>): Array<Member> {
-    return value.map((x)=>from_candid_Member_n9(_uploadFile, _downloadFile, x));
+function from_candid_vec_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Member>): Array<Member> {
+    return value.map((x)=>from_candid_Member_n10(_uploadFile, _downloadFile, x));
 }
-function to_candid_BulkMemberInput_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: BulkMemberInput): _BulkMemberInput {
-    return to_candid_record_n7(_uploadFile, _downloadFile, value);
+function to_candid_BulkMemberInput_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: BulkMemberInput): _BulkMemberInput {
+    return to_candid_record_n8(_uploadFile, _downloadFile, value);
 }
-function to_candid_UserRole_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
-    return to_candid_variant_n4(_uploadFile, _downloadFile, value);
+function to_candid_UserRole_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
+    return to_candid_variant_n5(_uploadFile, _downloadFile, value);
 }
 function to_candid_opt_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: string | null): [] | [string] {
     return value === null ? candid_none() : candid_some(value);
@@ -362,37 +465,100 @@ function to_candid_opt_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Arra
 function to_candid_opt_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: bigint | null): [] | [bigint] {
     return value === null ? candid_none() : candid_some(value);
 }
-function to_candid_record_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function to_candid_opt_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: boolean | null): [] | [boolean] {
+    return value === null ? candid_none() : candid_some(value);
+}
+function to_candid_record_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     membershipNumber: string;
+    receipt2022?: string;
+    receipt2023?: string;
+    receipt2024?: string;
+    receipt2025?: string;
+    receipt2026?: string;
+    receipt2027?: string;
+    receipt2028?: string;
+    receipt2029?: string;
+    receipt2030?: string;
+    receiptPriorTo2021?: string;
     area: string;
     name: string;
     mobileNo: string;
     alternateMobile?: string;
+    priorTo2021?: boolean;
     address: string;
     familyMemberCount?: bigint;
     spouseName: string;
+    year2022?: boolean;
+    year2023?: boolean;
+    year2024?: boolean;
+    year2025?: boolean;
+    year2026?: boolean;
+    year2027?: boolean;
+    year2028?: boolean;
+    year2029?: boolean;
+    year2030?: boolean;
 }): {
     membershipNumber: string;
+    receipt2022: [] | [string];
+    receipt2023: [] | [string];
+    receipt2024: [] | [string];
+    receipt2025: [] | [string];
+    receipt2026: [] | [string];
+    receipt2027: [] | [string];
+    receipt2028: [] | [string];
+    receipt2029: [] | [string];
+    receipt2030: [] | [string];
+    receiptPriorTo2021: [] | [string];
     area: string;
     name: string;
     mobileNo: string;
     alternateMobile: [] | [string];
+    priorTo2021: [] | [boolean];
     address: string;
     familyMemberCount: [] | [bigint];
     spouseName: string;
+    year2022: [] | [boolean];
+    year2023: [] | [boolean];
+    year2024: [] | [boolean];
+    year2025: [] | [boolean];
+    year2026: [] | [boolean];
+    year2027: [] | [boolean];
+    year2028: [] | [boolean];
+    year2029: [] | [boolean];
+    year2030: [] | [boolean];
 } {
     return {
         membershipNumber: value.membershipNumber,
+        receipt2022: value.receipt2022 ? candid_some(value.receipt2022) : candid_none(),
+        receipt2023: value.receipt2023 ? candid_some(value.receipt2023) : candid_none(),
+        receipt2024: value.receipt2024 ? candid_some(value.receipt2024) : candid_none(),
+        receipt2025: value.receipt2025 ? candid_some(value.receipt2025) : candid_none(),
+        receipt2026: value.receipt2026 ? candid_some(value.receipt2026) : candid_none(),
+        receipt2027: value.receipt2027 ? candid_some(value.receipt2027) : candid_none(),
+        receipt2028: value.receipt2028 ? candid_some(value.receipt2028) : candid_none(),
+        receipt2029: value.receipt2029 ? candid_some(value.receipt2029) : candid_none(),
+        receipt2030: value.receipt2030 ? candid_some(value.receipt2030) : candid_none(),
+        receiptPriorTo2021: value.receiptPriorTo2021 ? candid_some(value.receiptPriorTo2021) : candid_none(),
         area: value.area,
         name: value.name,
         mobileNo: value.mobileNo,
         alternateMobile: value.alternateMobile ? candid_some(value.alternateMobile) : candid_none(),
+        priorTo2021: value.priorTo2021 ? candid_some(value.priorTo2021) : candid_none(),
         address: value.address,
         familyMemberCount: value.familyMemberCount ? candid_some(value.familyMemberCount) : candid_none(),
-        spouseName: value.spouseName
+        spouseName: value.spouseName,
+        year2022: value.year2022 ? candid_some(value.year2022) : candid_none(),
+        year2023: value.year2023 ? candid_some(value.year2023) : candid_none(),
+        year2024: value.year2024 ? candid_some(value.year2024) : candid_none(),
+        year2025: value.year2025 ? candid_some(value.year2025) : candid_none(),
+        year2026: value.year2026 ? candid_some(value.year2026) : candid_none(),
+        year2027: value.year2027 ? candid_some(value.year2027) : candid_none(),
+        year2028: value.year2028 ? candid_some(value.year2028) : candid_none(),
+        year2029: value.year2029 ? candid_some(value.year2029) : candid_none(),
+        year2030: value.year2030 ? candid_some(value.year2030) : candid_none()
     };
 }
-function to_candid_variant_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {
+function to_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {
     admin: null;
 } | {
     user: null;
@@ -407,8 +573,8 @@ function to_candid_variant_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8
         guest: null
     } : value;
 }
-function to_candid_vec_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<BulkMemberInput>): Array<_BulkMemberInput> {
-    return value.map((x)=>to_candid_BulkMemberInput_n6(_uploadFile, _downloadFile, x));
+function to_candid_vec_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<BulkMemberInput>): Array<_BulkMemberInput> {
+    return value.map((x)=>to_candid_BulkMemberInput_n7(_uploadFile, _downloadFile, x));
 }
 export interface CreateActorOptions {
     agent?: Agent;

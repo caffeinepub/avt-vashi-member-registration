@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 15,
+  "projectStateVersion": 27,
   "summary": "A membership registration app where users can capture basic information (Name, Photo, Mobile No, Address, Area, Spouse Name, Alternate Mobile, Membership Number) and store it in a Membership database. The app is named 'AVT Vashi - Member Registration' and supports bulk CSV upload of existing members.",
   "architectural_notes": [
     "Membership database stores: Name, Photo, Mobile No, Address, Area",
@@ -8,10 +8,13 @@
     "Membership database also stores: Membership Number (text, optional for manual entry, auto-assigned if not provided)",
     "Member Photo field is being removed from the data model and UI",
     "Family Member Count (numeric) added to Member record type",
-    "Membership Number is mandatory (required) — not optional"
+    "Membership Number is mandatory (required) — not optional",
+    "Membership database will include 10 yearly columns: 'Prior to 2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'",
+    "Each of the ten yearly columns ('Prior to 2021', '2022'–'2030') will have an associated optional receipt number field (e.g., 'priorTo2021Receipt', 'year2022Receipt', etc.) stored as ?Text in the backend"
   ],
   "known_issues": [
-    "Download Database button not visible on the Members page"
+    "Download Database button not visible on the Members page",
+    "Bulk upload returns 'Unauthorized: Only users can bulk add members' error when uploading data"
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -190,6 +193,87 @@
         "REQ-30"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fix-the-memberspage-so-that-a-clearly-visible-download-database-button-appears-in-the-page-header-area-distinct-from-the-download-template-button-on-the-bulkuploadpage-the-button-must-be-rendered-in-memberspage-tsx-styled-consistently-with-the-app-s-design-theme-and-must-trigger-a-client-side-csv-download-of-all-member-records-with-columns-membership-number-name-mobile-no-alternate-mobile-address-area-spouse-name-family-member-count-ensure-the-button-is-not-accidentally-hidden-conditionally-rendered-or-obscured-by-layout-issues",
+      "title": "Fix the MembersPage so that a clearly visible 'Download Database' button appears in the page header area (distinct from the 'Download Template' button on the BulkUploadPage). The button must be rendered in MembersPage.tsx, styled consistently with the app's design theme, and must trigger a client-side CSV download of all member records with columns: Membership Number, Name, Mobile No, Alternate Mobile, Address, Area, Spouse Name, Family Member Count. Ensure the button is not accidentally hidden, conditionally rendered, or obscured by layout issues.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-search-input-field-on-the-memberspage-that-allows-users-to-filter-the-displayed-member-list-in-real-time-the-search-should-match-against-member-fields-including-membership-number-name-mobile-no-area-spouse-name-and-address-the-filter-must-be-applied-client-side-using-the-data-already-fetched-from-the-backend-when-the-search-input-is-cleared-all-members-should-be-shown-again",
+      "title": "Add a search input field on the MembersPage that allows users to filter the displayed member list in real time. The search should match against member fields including Membership Number, Name, Mobile No, Area, Spouse Name, and Address. The filter must be applied client-side using the data already fetched from the backend. When the search input is cleared, all members should be shown again.",
+      "reqIds": [
+        "REQ-32",
+        "REQ-33"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-update-the-membershipform-component-to-include-ten-checkbox-fields-one-per-year-labelled-prior-to-2021-2022-2023-2024-2025-2026-2027-2028-2029-2030-these-fields-are-optional-and-should-appear-as-a-clearly-grouped-section-titled-membership-years-near-the-end-of-the-form-before-family-member-count-update-the-useaddmember-mutation-hook-in-usequeries-ts-to-pass-all-ten-yearly-boolean-values-to-the-backend",
+      "title": "Update the MembershipForm component to include ten checkbox fields (one per year) labelled 'Prior to 2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'. These fields are optional and should appear as a clearly grouped section titled 'Membership Years' near the end of the form (before Family Member Count). Update the useAddMember mutation hook in useQueries.ts to pass all ten yearly boolean values to the backend.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-membercard-component-to-display-the-membership-years-for-which-a-member-is-active-show-the-active-years-where-the-value-is-true-as-a-compact-list-of-badges-or-tags-under-a-membership-years-label-if-no-years-are-active-omit-this-section-from-the-card",
+      "title": "Update the MemberCard component to display the membership years for which a member is active. Show the active years (where the value is true) as a compact list of badges or tags under a 'Membership Years' label. If no years are active, omit this section from the card.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-bulkuploadpage-csv-parsing-logic-to-support-ten-new-optional-columns-prior-to-2021-2022-2023-2024-2025-2026-2027-2028-2029-2030-each-column-value-should-be-interpreted-as-a-boolean-e-g-true-1-yes-true-anything-else-or-empty-false-null-pass-these-values-through-the-usebulkaddmembers-mutation-hook-to-the-backend-update-the-sample-csv-template-to-include-these-ten-columns",
+      "title": "Update the BulkUploadPage CSV parsing logic to support ten new optional columns: 'Prior to 2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'. Each column value should be interpreted as a boolean (e.g., 'true'/'1'/'yes' = true, anything else or empty = false/null). Pass these values through the useBulkAddMembers mutation hook to the backend. Update the sample CSV template to include these ten columns.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-download-database-csv-export-on-memberspage-to-include-all-ten-yearly-columns-prior-to-2021-2022-2023-2024-2025-2026-2027-2028-2029-2030-appended-after-the-existing-columns-membership-number-name-mobile-no-alternate-mobile-address-area-spouse-name-family-member-count-export-true-values-as-yes-and-false-null-values-as-no-in-the-csv",
+      "title": "Update the 'Download Database' CSV export on MembersPage to include all ten yearly columns — 'Prior to 2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030' — appended after the existing columns (Membership Number, Name, Mobile No, Alternate Mobile, Address, Area, Spouse Name, Family Member Count). Export true values as 'Yes' and false/null values as 'No' in the CSV.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-membershipform-component-to-add-a-text-input-for-receipt-number-immediately-adjacent-to-or-beneath-each-of-the-ten-yearly-membership-checkbox-fields-prior-to-2021-2022-2023-2024-2025-2026-2027-2028-2029-2030-each-receipt-number-input-should-be-optional-labelled-receipt-no-or-similar-and-only-needs-to-be-filled-if-the-corresponding-year-checkbox-is-checked-update-the-useaddmember-mutation-hook-in-usequeries-ts-to-pass-all-ten-receipt-number-values-to-the-backend",
+      "title": "Update the MembershipForm component to add a text input for receipt number immediately adjacent to (or beneath) each of the ten yearly membership checkbox fields: 'Prior to 2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'. Each receipt number input should be optional, labelled 'Receipt No.' or similar, and only needs to be filled if the corresponding year checkbox is checked. Update the useAddMember mutation hook in useQueries.ts to pass all ten receipt number values to the backend.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-membercard-component-to-display-the-receipt-number-alongside-each-active-membership-year-badge-or-tag-if-a-receipt-number-is-present-for-an-active-year-show-it-next-to-the-year-label-e-g-2024-receipt-abc123-if-no-receipt-number-is-provided-for-an-active-year-just-show-the-year-as-before",
+      "title": "Update the MemberCard component to display the receipt number alongside each active membership year badge or tag. If a receipt number is present for an active year, show it next to the year label (e.g., '2024 — Receipt: ABC123'). If no receipt number is provided for an active year, just show the year as before.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-bulkuploadpage-csv-parsing-logic-to-support-ten-new-optional-receipt-number-columns-receipt-prior-to-2021-receipt-2022-receipt-2023-receipt-2024-receipt-2025-receipt-2026-receipt-2027-receipt-2028-receipt-2029-receipt-2030-each-value-should-be-treated-as-an-optional-text-string-pass-these-values-through-the-usebulkaddmembers-mutation-hook-to-the-backend-update-the-sample-csv-template-to-include-these-ten-receipt-number-columns",
+      "title": "Update the BulkUploadPage CSV parsing logic to support ten new optional receipt number columns: 'Receipt Prior to 2021', 'Receipt 2022', 'Receipt 2023', 'Receipt 2024', 'Receipt 2025', 'Receipt 2026', 'Receipt 2027', 'Receipt 2028', 'Receipt 2029', 'Receipt 2030'. Each value should be treated as an optional text string. Pass these values through the useBulkAddMembers mutation hook to the backend. Update the sample CSV template to include these ten receipt number columns.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-download-database-csv-export-on-memberspage-to-include-the-ten-receipt-number-columns-receipt-prior-to-2021-receipt-2022-receipt-2023-receipt-2024-receipt-2025-receipt-2026-receipt-2027-receipt-2028-receipt-2029-receipt-2030-interleaved-after-each-corresponding-yearly-column-or-appended-after-the-ten-yearly-columns-export-the-receipt-number-text-value-if-present-or-an-empty-string-if-null",
+      "title": "Update the 'Download Database' CSV export on MembersPage to include the ten receipt number columns — 'Receipt Prior to 2021', 'Receipt 2022', 'Receipt 2023', 'Receipt 2024', 'Receipt 2025', 'Receipt 2026', 'Receipt 2027', 'Receipt 2028', 'Receipt 2029', 'Receipt 2030' — interleaved after each corresponding yearly column or appended after the ten yearly columns. Export the receipt number text value if present, or an empty string if null.",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -314,6 +398,48 @@
       "summary": "Update the backend Motoko actor to change the membershipNumber field in the Member record type from optional (?Text) to required (Text). Update the addMember and bulkAddMembers function signatures to accept membershipNumber as a required Text parameter instead of optional. Generate or update migration.mo to provide a default empty string value for any existing records that have a null membershipNumber.",
       "reqIds": [
         "REQ-27"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Add a search/filter input on the Members page to search through member records",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Add ten yearly columns to the Membership database: 'Prior to 2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030' — to track membership year-wise data for each member",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Update the backend Motoko actor's Member record type to add ten optional boolean or text fields representing yearly membership status: 'priorTo2021', 'year2022', 'year2023', 'year2024', 'year2025', 'year2026', 'year2027', 'year2028', 'year2029', 'year2030' — each as optional (?Bool). Update the addMember and bulkAddMembers function signatures to accept these ten new optional parameters. Generate or update migration.mo to default all ten new fields to null for existing member records.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Add a receipt number field alongside each of the ten yearly columns ('Prior to 2021', '2022', ..., '2030') in the membership database, registration form, member card display, bulk upload CSV, and database export",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Update the backend Motoko actor's Member record type to add ten optional Text fields for receipt numbers, one per year: 'receiptPriorTo2021', 'receipt2022', 'receipt2023', 'receipt2024', 'receipt2025', 'receipt2026', 'receipt2027', 'receipt2028', 'receipt2029', 'receipt2030' — each as optional (?Text). Update the addMember and bulkAddMembers function signatures to accept these ten new optional receipt number parameters alongside the existing yearly boolean parameters. Generate or update migration.mo to default all ten new receipt number fields to null for existing member records.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Fix the 'Unauthorized: Only users can bulk add members' error that occurs when calling the bulkAddMembers backend function. The backend access control check for bulkAddMembers is incorrectly blocking authenticated users. Inspect the caller identity check in the Motoko actor's bulkAddMembers function and ensure it correctly allows authenticated Internet Identity users (non-anonymous principals) to perform the bulk add operation, consistent with how the addMember function handles access control.",
+      "reqIds": [
+        "REQ-44"
       ],
       "status": "pending"
     }

@@ -1,12 +1,10 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the "Download Database" button on the Members page so it is visible and functional.
+**Goal:** Fix the "Unauthorized: Only users can bulk add members" error in the backend `bulkAddMembers` function so authenticated Internet Identity users can successfully perform bulk uploads.
 
 **Planned changes:**
-- Ensure the "Download Database" button is rendered in the Members page header area, alongside the page title, without requiring any scrolling or extra interaction to reveal it.
-- Style the button consistently with the app's existing design theme (colors, typography, spacing).
-- Ensure the button triggers a client-side CSV download of all currently loaded member records with columns: Membership Number, Name, Mobile No, Alternate Mobile, Address, Area, Spouse Name, Family Member Count.
-- Ensure the button remains visible and functional regardless of whether the members list is empty, loading, or populated.
+- Inspect the access control check in the Motoko actor's `bulkAddMembers` function
+- Update the principal/identity validation logic in `bulkAddMembers` to match the same check used in the `addMember` function, allowing authenticated (non-anonymous) callers while still rejecting anonymous principals
 
-**User-visible outcome:** Users can see and click the "Download Database" button on the Members page to download a CSV file of all member records at any time.
+**User-visible outcome:** Authenticated users can bulk upload members via the BulkUploadPage without encountering an "Unauthorized" error, and the import completes successfully.
