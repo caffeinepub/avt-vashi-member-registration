@@ -1,0 +1,325 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 15,
+  "summary": "A membership registration app where users can capture basic information (Name, Photo, Mobile No, Address, Area, Spouse Name, Alternate Mobile, Membership Number) and store it in a Membership database. The app is named 'AVT Vashi - Member Registration' and supports bulk CSV upload of existing members.",
+  "architectural_notes": [
+    "Membership database stores: Name, Photo, Mobile No, Address, Area",
+    "Membership database also stores: Spouse Name, Alternate Mobile Number (optional)",
+    "Membership database also stores: Membership Number (text, optional for manual entry, auto-assigned if not provided)",
+    "Member Photo field is being removed from the data model and UI",
+    "Family Member Count (numeric) added to Member record type",
+    "Membership Number is mandatory (required) — not optional"
+  ],
+  "known_issues": [
+    "Download Database button not visible on the Members page"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-build-a-membership-registration-form-on-the-frontend-with-the-following-required-fields-name-text-input-photo-file-upload-with-preview-stored-as-base64-mobile-no-text-input-with-numeric-validation-address-textarea-and-area-text-input-all-fields-must-be-validated-before-submission",
+      "title": "Build a membership registration form on the frontend with the following required fields: Name (text input), Photo (file upload with preview, stored as base64), Mobile No (text input with numeric validation), Address (textarea), and Area (text input). All fields must be validated before submission.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-membership-list-view-on-the-frontend-that-displays-all-registered-members-fetched-from-the-backend-each-member-card-should-show-their-photo-thumbnail-name-mobile-number-address-and-area",
+      "title": "Build a Membership List view on the frontend that displays all registered members fetched from the backend. Each member card should show their photo thumbnail, name, mobile number, address, and area.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-clean-modern-visual-theme-to-the-app-use-a-professional-color-palette-with-clear-typography-card-based-layouts-for-member-entries-and-a-structured-form-layout-the-design-should-feel-like-a-membership-management-dashboard",
+      "title": "Apply a clean, modern visual theme to the app. Use a professional color palette with clear typography, card-based layouts for member entries, and a structured form layout. The design should feel like a membership management dashboard.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-spouse-name-text-input-field-required-with-validation-to-the-membershipform-component-the-field-must-be-validated-before-submission-an-error-message-should-appear-if-left-blank-update-the-useaddmember-mutation-hook-and-related-query-logic-to-pass-spousename-to-the-backend",
+      "title": "Add a 'Spouse Name' text input field (required, with validation) to the MembershipForm component. The field must be validated before submission — an error message should appear if left blank. Update the useAddMember mutation hook and related query logic to pass spouseName to the backend.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-alternate-mobile-number-text-input-field-optional-numeric-validation-only-if-filled-to-the-membershipform-component-the-field-must-not-be-marked-as-required-and-should-not-block-form-submission-if-left-empty-if-a-value-is-entered-it-must-be-numeric-update-the-useaddmember-mutation-hook-and-related-query-logic-to-pass-the-optional-alternatemobile-value-to-the-backend",
+      "title": "Add an 'Alternate Mobile Number' text input field (optional, numeric validation only if filled) to the MembershipForm component. The field must NOT be marked as required and should not block form submission if left empty. If a value is entered, it must be numeric. Update the useAddMember mutation hook and related query logic to pass the optional alternateMobile value to the backend.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-membercard-component-to-display-the-spouse-name-and-alternate-mobile-number-if-present-for-each-member-in-the-members-list-view",
+      "title": "Update the MemberCard component to display the Spouse Name and Alternate Mobile Number (if present) for each member in the members list view.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-optional-membership-number-text-input-field-to-the-membershipform-component-the-field-should-not-be-required-and-should-not-block-form-submission-if-left-empty-update-the-useaddmember-mutation-hook-to-pass-the-optional-membershipnumber-value-to-the-backend",
+      "title": "Add an optional 'Membership Number' text input field to the MembershipForm component. The field should not be required and should not block form submission if left empty. Update the useAddMember mutation hook to pass the optional membershipNumber value to the backend.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-membercard-component-to-display-the-membership-number-when-present-for-each-member-in-the-members-list-view",
+      "title": "Update the MemberCard component to display the Membership Number when present for each member in the members list view.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-bulk-csv-upload-page-or-modal-on-the-frontend-it-must-allow-the-user-to-select-and-upload-a-csv-file-with-the-following-columns-membership-number-name-mobile-no-address-area-spouse-name-alternate-mobile-optional-the-frontend-should-parse-the-csv-client-side-validate-that-required-columns-name-mobile-no-address-area-spouse-name-are-present-and-non-empty-for-each-row-display-a-preview-table-of-the-parsed-rows-before-submission-and-then-call-the-bulkaddmembers-backend-function-to-save-all-valid-rows-photos-are-not-supported-in-bulk-upload-member-records-will-be-created-without-photos-show-a-success-message-with-the-count-of-members-imported-and-show-row-level-errors-for-any-invalid-rows-without-blocking-the-valid-ones",
+      "title": "Build a Bulk CSV Upload page or modal on the frontend. It must allow the user to select and upload a CSV file with the following columns: Membership Number, Name, Mobile No, Address, Area, Spouse Name, Alternate Mobile (optional). The frontend should parse the CSV client-side, validate that required columns (Name, Mobile No, Address, Area, Spouse Name) are present and non-empty for each row, display a preview table of the parsed rows before submission, and then call the bulkAddMembers backend function to save all valid rows. Photos are not supported in bulk upload — member records will be created without photos. Show a success message with the count of members imported, and show row-level errors for any invalid rows without blocking the valid ones.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-bulkuploadpage-or-modal-accessible-from-the-navigation-on-the-frontend-that-allows-the-user-to-select-a-csv-file-parse-the-csv-client-side-and-support-the-following-columns-membership-number-name-mobile-no-address-area-spouse-name-alternate-mobile-validate-that-each-row-has-non-empty-values-for-name-mobile-no-address-area-and-spouse-name-display-a-preview-table-of-parsed-rows-valid-and-invalid-before-submission-clearly-marking-invalid-rows-with-row-level-error-messages-submit-only-valid-rows-via-the-bulkaddmembers-backend-call-after-submission-show-a-success-message-with-the-count-of-members-imported-and-display-any-row-level-validation-errors-without-blocking-the-valid-import",
+      "title": "Create a BulkUploadPage (or modal accessible from the navigation) on the frontend that allows the user to select a CSV file. Parse the CSV client-side and support the following columns: Membership Number, Name, Mobile No, Address, Area, Spouse Name, Alternate Mobile. Validate that each row has non-empty values for Name, Mobile No, Address, Area, and Spouse Name. Display a preview table of parsed rows (valid and invalid) before submission, clearly marking invalid rows with row-level error messages. Submit only valid rows via the bulkAddMembers backend call. After submission, show a success message with the count of members imported and display any row-level validation errors without blocking the valid import.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-bulk-upload-navigation-link-in-the-layout-header-component-so-users-can-navigate-to-the-bulk-upload-page-from-anywhere-in-the-app-register-the-corresponding-route-e-g-bulk-upload-in-the-tanstack-router-configuration-in-app-tsx",
+      "title": "Add a 'Bulk Upload' navigation link in the Layout header component so users can navigate to the Bulk Upload page from anywhere in the app. Register the corresponding route (e.g., /bulk-upload) in the TanStack Router configuration in App.tsx.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-usequeries-ts-hooks-file-to-add-a-usebulkaddmembers-mutation-hook-that-calls-the-bulkaddmembers-backend-function-with-an-array-of-member-records-and-returns-the-result-following-the-same-pattern-as-the-existing-useaddmember-hook",
+      "title": "Update the useQueries.ts hooks file to add a useBulkAddMembers mutation hook that calls the bulkAddMembers backend function with an array of member records and returns the result, following the same pattern as the existing useAddMember hook.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-member-photo-field-entirely-from-the-membershipform-component-remove-the-photo-file-input-preview-display-and-base64-encoding-logic-the-form-should-no-longer-collect-or-validate-a-photo",
+      "title": "Remove the Member Photo field entirely from the MembershipForm component. Remove the photo file input, preview display, and base64 encoding logic. The form should no longer collect or validate a photo.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-photo-display-thumbnail-and-initials-fallback-avatar-from-the-membercard-component-the-card-layout-should-be-updated-so-the-absence-of-a-photo-does-not-leave-empty-space",
+      "title": "Remove the photo display (thumbnail and initials fallback avatar) from the MemberCard component. The card layout should be updated so the absence of a photo does not leave empty space.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-move-the-membership-number-field-to-the-top-of-the-membershipform-component-so-it-appears-as-the-first-input-field-in-the-form",
+      "title": "Move the Membership Number field to the top of the MembershipForm component so it appears as the first input field in the form.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-move-the-membership-number-display-to-the-top-of-the-membercard-component-so-it-is-the-first-piece-of-information-shown-on-each-member-card",
+      "title": "Move the Membership Number display to the top of the MemberCard component so it is the first piece of information shown on each member card.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-family-member-count-numeric-input-field-optional-must-be-a-non-negative-integer-if-provided-as-the-last-field-in-the-membershipform-component-update-the-useaddmember-mutation-hook-to-pass-the-optional-familymembercount-value-to-the-backend",
+      "title": "Add a 'Family Member Count' numeric input field (optional, must be a non-negative integer if provided) as the last field in the MembershipForm component. Update the useAddMember mutation hook to pass the optional familyMemberCount value to the backend.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-membercard-component-to-display-the-family-member-count-when-present-as-the-last-detail-on-each-member-card",
+      "title": "Update the MemberCard component to display the Family Member Count (when present) as the last detail on each member card.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-download-database-button-on-the-members-page-that-exports-all-member-records-as-a-csv-file-the-csv-should-include-columns-membership-number-name-mobile-no-alternate-mobile-address-area-spouse-name-family-member-count-the-file-should-be-downloaded-client-side-using-the-data-already-fetched-from-the-backend",
+      "title": "Add a 'Download Database' button on the Members page that exports all member records as a CSV file. The CSV should include columns: Membership Number, Name, Mobile No, Alternate Mobile, Address, Area, Spouse Name, Family Member Count. The file should be downloaded client-side using the data already fetched from the backend.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-membershipform-component-to-make-the-membership-number-field-required-add-a-validation-rule-so-that-the-form-cannot-be-submitted-if-membership-number-is-empty-display-an-error-message-e-g-membership-number-is-required-below-the-field-when-validation-fails-update-the-useaddmember-mutation-hook-to-pass-membershipnumber-as-a-required-string",
+      "title": "Update the MembershipForm component to make the Membership Number field required. Add a validation rule so that the form cannot be submitted if Membership Number is empty. Display an error message (e.g., 'Membership Number is required') below the field when validation fails. Update the useAddMember mutation hook to pass membershipNumber as a required string.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-bulkuploadpage-csv-validation-logic-to-treat-membership-number-as-a-required-column-any-row-with-an-empty-or-missing-membership-number-value-must-be-marked-as-invalid-and-excluded-from-submission-with-a-row-level-error-message-indicating-that-membership-number-is-required",
+      "title": "Update the BulkUploadPage CSV validation logic to treat Membership Number as a required column. Any row with an empty or missing Membership Number value must be marked as invalid and excluded from submission, with a row-level error message indicating that Membership Number is required.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-download-database-button-on-the-memberspage-so-it-is-visible-and-accessible-to-the-user-ensure-the-button-renders-correctly-in-the-page-header-area-alongside-the-page-title-is-styled-consistently-with-the-app-s-design-theme-and-triggers-a-csv-download-of-all-member-records-with-columns-membership-number-name-mobile-no-alternate-mobile-address-area-spouse-name-family-member-count",
+      "title": "Fix the 'Download Database' button on the MembersPage so it is visible and accessible to the user. Ensure the button renders correctly in the page header area alongside the page title, is styled consistently with the app's design theme, and triggers a CSV download of all member records with columns: Membership Number, Name, Mobile No, Alternate Mobile, Address, Area, Spouse Name, Family Member Count.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Form to capture Name, Photo, Mobile No, Address, and Area fields",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Save submitted form data to a Membership database",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Create a backend Motoko actor that stores a Membership database. Each membership record must contain: a unique ID, Name (text), Photo (blob/base64 text), Mobile No (text), Address (text), and Area (text). Expose functions to add a new member and retrieve all members.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add Spouse Name field (required) to the membership registration form and database",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add Alternate Mobile Number field (optional/not mandatory) to the membership registration form and database",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add a 'Spouse Name' field (text input, required) to the backend membership data model. Update the Motoko actor's member record type to include a spouseName field (Text), and update the addMember function signature to accept this new required field.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Add an 'Alternate Mobile Number' field (text input, optional/not mandatory) to the backend membership data model. Update the Motoko actor's member record type to include an alternateMobile field as an optional type (?Text), and update the addMember function signature to accept this optional field.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add bulk CSV upload feature to import existing members. CSV columns: Membership Number, Name, Mobile No, Address, Area, Spouse Name, Alternate Mobile (optional). Update backend to store Membership Number field.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Add a 'Membership Number' field (optional Text) to the backend Member record type in the Motoko actor. Update the addMember function signature to accept an optional membershipNumber (?Text) parameter. Expose a new bulkAddMembers function that accepts an array of member records and inserts them all in one call. Generate migration.mo to add the membershipNumber field (defaulting to null) to all existing member records.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Add a bulkAddMembers function to the backend Motoko actor that accepts an array of member records (each with membershipNumber (?Text), name (Text), mobileNo (Text), address (Text), area (Text), spouseName (Text), alternateMobile (?Text), and no photo) and inserts all of them into the members store, returning the count of successfully added records.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Remove Member Photo field from the registration form and member card display",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Move Membership Number field to the top of the registration form and member card display",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add a Family Member Count field (numeric) to the registration form, database, and member card display (shown last)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add a download option to export the full members database (e.g., as CSV)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Remove the photo field from the backend Member record type in the Motoko actor. Update the addMember and bulkAddMembers function signatures to no longer accept a photo parameter. Generate migration.mo to drop the photo field from existing member records.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add a 'Family Member Count' numeric input field to the backend Member record type. Update the addMember and bulkAddMembers function signatures to accept an optional familyMemberCount (?Nat) parameter. Generate or update migration.mo to default familyMemberCount to null for existing records.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Make Membership Number a required/mandatory field in both the registration form (with validation) and the backend data model",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Update the backend Motoko actor to change the membershipNumber field in the Member record type from optional (?Text) to required (Text). Update the addMember and bulkAddMembers function signatures to accept membershipNumber as a required Text parameter instead of optional. Generate or update migration.mo to provide a default empty string value for any existing records that have a null membershipNumber.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Membership Registration App",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

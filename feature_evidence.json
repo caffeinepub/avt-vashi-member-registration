@@ -1,0 +1,24 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-fix-the-download-database-button-on-the-memberspage-so-it-is-visible-and-accessible-to-the-user-ensure-the-button-renders-correctly-in-the-page-header-area-alongside-the-page-title-is-styled-consistently-with-the-app-s-design-theme-and-triggers-a-csv-download-of-all-member-records-with-columns-membership-number-name-mobile-no-alternate-mobile-address-area-spouse-name-family-member-count",
+      "featureTitle": "Fix the 'Download Database' button on the MembersPage so it is visible and accessible to the user. Ensure the button renders correctly in the page header area alongside the page title, is styled consistently with the app's design theme, and triggers a CSV download of all member records with columns: Membership Number, Name, Mobile No, Alternate Mobile, Address, Area, Spouse Name, Family Member Count.",
+      "files": [
+        "frontend/src/pages/MembersPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-30"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

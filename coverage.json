@@ -1,0 +1,38 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-28T09:01:22.673Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 1,
+    "implemented": 1,
+    "items": [
+      {
+        "id": "REQ-30",
+        "summary": "Fix the 'Download Database' button on the MembersPage so it is visible and accessible to the user. Ensure the button renders correctly in the page header area alongside the page title, is styled consistently with the app's design theme, and triggers a CSV download of all member records with columns: Membership Number, Name, Mobile No, Alternate Mobile, Address, Area, Spouse Name, Family Member Count.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/MembersPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/MembersPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/components/MemberList.tsx",
+    "frontend/src/pages/MembersPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

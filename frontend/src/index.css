@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* Warm teal / forest green palette */
+    --background: 0.97 0.008 85;
+    --foreground: 0.18 0.025 200;
+
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.025 200;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.025 200;
+
+    /* Primary: deep teal */
+    --primary: 0.38 0.09 195;
+    --primary-foreground: 0.98 0.005 85;
+
+    /* Secondary: warm sand */
+    --secondary: 0.93 0.018 80;
+    --secondary-foreground: 0.25 0.03 195;
+
+    /* Muted: light warm gray */
+    --muted: 0.94 0.01 80;
+    --muted-foreground: 0.52 0.02 195;
+
+    /* Accent: amber/gold */
+    --accent: 0.88 0.06 75;
+    --accent-foreground: 0.22 0.04 195;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.88 0.015 80;
+    --input: 0.88 0.015 80;
+    --ring: 0.38 0.09 195;
+
+    --chart-1: 0.646 0.222 41.116;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+
+    --sidebar: 0.22 0.04 195;
+    --sidebar-foreground: 0.95 0.01 85;
+    --sidebar-primary: 0.75 0.1 175;
+    --sidebar-primary-foreground: 0.98 0.005 85;
+    --sidebar-accent: 0.3 0.05 195;
+    --sidebar-accent-foreground: 0.95 0.01 85;
+    --sidebar-border: 0.3 0.05 195;
+    --sidebar-ring: 0.75 0.1 175;
+  }
+
+  .dark {
+    --background: 0.14 0.025 200;
+    --foreground: 0.95 0.01 85;
+
+    --card: 0.19 0.03 200;
+    --card-foreground: 0.95 0.01 85;
+
+    --popover: 0.22 0.035 200;
+    --popover-foreground: 0.95 0.01 85;
+
+    --primary: 0.65 0.1 175;
+    --primary-foreground: 0.12 0.025 200;
+
+    --secondary: 0.25 0.035 200;
+    --secondary-foreground: 0.9 0.01 85;
+
+    --muted: 0.25 0.03 200;
+    --muted-foreground: 0.65 0.02 195;
+
+    --accent: 0.75 0.1 75;
+    --accent-foreground: 0.12 0.025 200;
+
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.205 0 0;
+
+    --border: 1 0 0 / 10%;
+    --input: 1 0 0 / 15%;
+    --ring: 0.65 0.1 175;
+
+    --sidebar: 0.12 0.025 200;
+    --sidebar-foreground: 0.95 0.01 85;
+    --sidebar-primary: 0.65 0.1 175;
+    --sidebar-primary-foreground: 0.12 0.025 200;
+    --sidebar-accent: 0.2 0.03 200;
+    --sidebar-accent-foreground: 0.95 0.01 85;
+    --sidebar-border: 1 0 0 / 10%;
+    --sidebar-ring: 0.65 0.1 175;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}

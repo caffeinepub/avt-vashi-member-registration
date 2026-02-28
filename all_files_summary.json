@@ -1,0 +1,23 @@
+{
+  "backend/main.mo": "Main Motoko actor defining Member and UserProfile types, persistent state with access-controlled CRUD operations (addMember, bulkAddMembers, getAllMembers, getMember, user profile management) using a Map-based store and role-based authorization mixin.",
+  "feature_evidence.json": "Feature evidence report documenting a single feature (REQ-30) to fix the 'Download Database' CSV export button on MembersPage, listing the affected file and component dependencies.",
+  "frontend-file-summaries.txt": "JSON document containing one-to-two sentence summaries of all frontend source files, serving as a reference index for the project's frontend codebase.",
+  "frontend/index.css": "Tailwind CSS entry file defining OKLCH-based CSS custom properties for the design token system (colors, radius, sidebar) in both light and dark modes.",
+  "frontend/index.html": "Minimal HTML shell for the Vite/React app, mounting the React root div and loading the main TSX entry point as an ES module.",
+  "frontend/src/App.tsx": "TanStack Router configuration with a root layout route wrapping Register, Members, and Bulk Upload page routes, plus an index redirect to /register.",
+  "frontend/src/components/Layout.tsx": "App shell component rendering a sticky primary-colored header with brand logo and navigation links, a main content slot, and a footer with copyright and caffeine.ai attribution.",
+  "frontend/src/components/MemberCard.tsx": "Card UI component that displays a single member's details including membership number, name, area badge, phone numbers, spouse name, address, and optional family member count.",
+  "frontend/src/components/MemberList.tsx": "Component that fetches all members via React Query and renders a responsive grid of MemberCards with loading skeletons, error retry state, and an empty state message.",
+  "frontend/src/components/MembershipForm.tsx": "A React form component for registering a new member, with validation, numeric-only fields, and submission via the `useAddMember` mutation hook.",
+  "frontend/src/hooks/useActor.ts": "A React Query hook that creates and caches an authenticated or anonymous ICP backend actor, initializing access control with an admin token and invalidating dependent queries when the actor changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides an `InternetIdentityProvider` context and `useInternetIdentity` hook for managing ICP Internet Identity authentication, including login, logout, and identity persistence via `AuthClient`.",
+  "frontend/src/hooks/useQueries.ts": "Exports React Query hooks (`useGetAllMembers`, `useAddMember`, `useBulkAddMembers`) that wrap backend actor calls for fetching and mutating member data.",
+  "frontend/src/index.css": "Global CSS file that imports fonts, sets up Tailwind directives, and defines light/dark CSS custom properties for the app's warm teal/forest green design system.",
+  "frontend/src/main.tsx": "Application entry point that mounts the React app wrapped with `QueryClientProvider` and `InternetIdentityProvider`.",
+  "frontend/src/pages/BulkUploadPage.tsx": "A page component for uploading a CSV file to bulk-add members, with client-side CSV parsing, per-row validation, a preview table, and submission via the `useBulkAddMembers` mutation hook.",
+  "frontend/src/pages/MembersPage.tsx": "A page that displays all registered members via `MemberList` and provides a button to download the full member database as a CSV file.",
+  "frontend/src/pages/RegisterPage.tsx": "A page with a banner image and a card container that renders the `MembershipForm` component for registering a single new member.",
+  "frontend/src/utils/urlParams.ts": "Utility functions for extracting, persisting, and clearing URL parameters from both query strings and hash-based routing, with sessionStorage fallback support.",
+  "frontend/tailwind.config.js": "Tailwind CSS configuration with dark mode, custom OKLCH-based color tokens, extended typography/border/shadow/animation settings, and plugins for typography, container queries, and animations.",
+  "project_state.json": "Project state metadata describing the AVT Vashi Member Registration app, its architectural notes, existing features, known issues, and current fix request context."
+}
